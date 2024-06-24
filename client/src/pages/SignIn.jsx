@@ -6,6 +6,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/user.slice.js";
+import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -63,8 +64,10 @@ const SignIn = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <div className="border rounded-2xl shadow p-6 mt-7">
-        <h1 className="text-3xl text-center font-semibold mb-7">Sign In</h1>
+      <div className="bg-[#ffffff] border rounded-2xl shadow-2xl p-6 mt-9">
+        <h1 className="text-3xl text-center font-semibold mb-5 text-sky-600">
+          Log Into App
+        </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -82,17 +85,29 @@ const SignIn = () => {
           />
           <button
             disabled={loading}
-            className="bg-sky-600 text-white p-3 rounded-lg hover:opacity-90  disabled:opacity-80"
+            className="bg-sky-600 text-white p-3 rounded-lg hover:opacity-85  disabled:opacity-80"
           >
             {loading ? "Loading..." : "Sign In"}
           </button>
+          <OAuth />
         </form>
-        <div className="flex gap-2 mt-5">
-          <p>Don't have an account?</p>
-          <Link to="/sign-up">
-            <span className="text-blue-500 hover:underline">Sign up</span>
+        <div className="mt-5 flex items-center justify-around">
+          <hr className="w-2/5" />
+          <span className="text-slate-400">or</span>
+          <hr className="w-2/5" />
+        </div>
+        <div className="mt-5 flex justify-between items-center">
+          <div className="flex gap-1">
+            <p>Don't have an account?</p>
+            <Link to="/sign-up">
+              <span className="text-sky-600 hover:underline">Sign up</span>
+            </Link>
+          </div>
+          <Link to="#">
+            <span className="hover:underline">Forgot Password?</span>
           </Link>
         </div>
+
         <p className="text-red-500 mt-5">{errorMessage && errorMessage}</p>
       </div>
     </div>

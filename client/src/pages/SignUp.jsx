@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -43,9 +44,9 @@ const SignUp = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <div className="border rounded-2xl shadow p-6 mt-7">
-        <h1 className="text-3xl font-semibold mb-2">Sign Up</h1>
-        <p className="text-slate-600 mb-7">It's quick and easy</p>
+      <div className="bg-[#ffffff] border rounded-2xl shadow-2xl p-6 mt-9">
+        <h1 className="text-3xl font-semibold text-center mb-2">Create a new account</h1>
+        <p className="text-slate-600 text-center mb-5">It's quick and easy</p>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -74,9 +75,10 @@ const SignUp = () => {
           >
             {loading ? "Loading..." : "Sign up"}
           </button>
+          <OAuth />
         </form>
-        <div className="flex gap-2 mt-5">
-          <p>Have an account?</p>
+        <div className="flex justify-center gap-1 mt-5">
+          <p>Already have an account?</p>
           <Link to="/sign-in">
             <span className="text-blue-500 hover:underline">Sign in</span>
           </Link>
