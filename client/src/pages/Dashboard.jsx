@@ -30,6 +30,9 @@ const Dashboard = () => {
             {currentUser.email}
           </p>
         </div>
+        <button className="font-semibold text-xl bg-red-700 text-white px-4 py-1 rounded-lg mt-5 hover:opacity-85">
+          Log out
+        </button>
       </div>
     </div>
   );
