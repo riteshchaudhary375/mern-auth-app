@@ -6,10 +6,31 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-3 my-9">
-      <p className="font-semibold text-lg">
-        <span className="text-slate-600 mr-1">Welcome back,</span>
-        <span className="uppercase">{currentUser.username}!</span>
-      </p>
+      <span className="text-slate-600 font-semibold text-xl">
+        Welcome back,
+      </span>
+      <div className="mt-10 max-w-sm mx-auto border border-gray-200 rounded-lg shadow-md flex flex-col items-center p-5">
+        <div className="relative h-32 w-32 self-center cursor-pointer shadow-lg overflow-hidden rounded-full">
+          <img
+            src={currentUser.profilePicture}
+            alt="user-profile"
+            className="rounded-full w-full h-full object-cover border-4 border-[lightgray]"
+          />
+        </div>
+        <h1 className="font-semibold text-3xl text-slate-700 underline mt-6 mb-4">
+          Profile
+        </h1>
+        <div className="font-semibold text-lg">
+          <p>
+            <span className="text-slate-600">Username: </span>
+            {currentUser.username}
+          </p>
+          <p>
+            <span className="text-slate-600">Email: </span>
+            {currentUser.email}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
