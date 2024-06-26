@@ -15,25 +15,25 @@ const Header = () => {
           <Link to="/" className="hover:underline">
             <li>Home</li>
           </Link>
-          <Link to="/dashboard">
-            {currentUser ? (
+          {currentUser ? (
+            <Link to="/dashboard">
               <img
                 src={currentUser.profilePicture}
                 alt="profile"
                 className="h-7 w-7 rounded-full object-cover"
-                title="Profile"
+                title="dashboard"
               />
-            ) : (
-              <div className="flex gap-4">
-                <Link to="/sign-in" className="hover:underline">
-                  <li>Sign in</li>
-                </Link>
-                <Link to="/sign-up" className="hover:underline">
-                  <li>Sign up</li>
-                </Link>
-              </div>
-            )}
-          </Link>
+            </Link>
+          ) : (
+            <div className="flex gap-4">
+              <Link to="/sign-in" className="hover:underline">
+                <li>Sign in</li>
+              </Link>
+              <Link to="/sign-up" className="hover:underline">
+                <li>Sign up</li>
+              </Link>
+            </div>
+          )}
         </ul>
       </div>
     </div>
