@@ -34,26 +34,6 @@ const Header = () => {
               </div>
             )}
           </Link>
-
-          {/* {currentUser ? (
-            <Link to="/dashboard">
-              <img
-                src={currentUser.profilePicture}
-                alt="profile"
-                className="h-7 w-7 rounded-full object-cover"
-                title="Profile"
-              />
-            </Link>
-          ) : (
-            <>
-              <Link to="/sign-in" className="hover:underline">
-                <li>Sign in</li>
-              </Link>
-              <Link to="/sign-up" className="hover:underline">
-                <li>Sign up</li>
-              </Link>
-            </>
-          )} */}
         </ul>
       </div>
     </div>
