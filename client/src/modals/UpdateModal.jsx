@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { GrUpdate } from "react-icons/gr";
 
 const UpdateModal = ({ onClose, onUpdateUser }) => {
   const updateModalRef = useRef();
@@ -22,13 +22,12 @@ const UpdateModal = ({ onClose, onUpdateUser }) => {
       onClick={closeUpdateModal}
     >
       <div className="bg-gray-100 mx-auto rounded-lg px-5 py-7 text-center ">
-        <HiOutlineExclamationCircle className="h-14 w-14 text-gray-700 mb-4 mx-auto" />
-        <h1 className="mb-2 text-2xl font-semibold text-gray-700">
+        <GrUpdate className="h-11 w-11  text-gray-700 mb-7 mx-auto" />
+        <h1 className="mb-1 text-2xl font-semibold text-gray-700">
           Confirm Change
         </h1>
         <p className="mb-5">
-          Updating this information will update your profile for each you are
-          assigned to.
+          Updating this information will update your profile.
         </p>
         <div
           className="flex justify-center gap-4"
