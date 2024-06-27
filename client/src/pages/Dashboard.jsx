@@ -10,6 +10,7 @@ import {
   deleteUserFailure,
   signoutUserSuccess,
 } from "../redux/user/user.slice.js";
+import DeleteModal from "../modals/DeleteModal.jsx";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Dashboard = () => {
   const [updateUserSuccessMessage, setUpdateUserSuccessMessage] =
     useState(null);
   const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState(null);
+  const [showUserDeleteModal, setShowUserDeleteModal] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -150,10 +152,16 @@ const Dashboard = () => {
               <button
                 type="button"
                 className="border-2 border-red-700 hover:bg-red-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85"
-                onClick={handleDeleteUser}
+                onClick={() => setShowUserDeleteModal(true)}
               >
                 Delete Account
               </button>
+              {showUserDeleteModal && (
+                <DeleteModal
+                  onClose={() => setShowUserDeleteModal(false)}
+                  onDeleteUser={handleDeleteUser}
+                />
+              )}
             </div>
           </form>
           <hr className="w-full my-4" />
