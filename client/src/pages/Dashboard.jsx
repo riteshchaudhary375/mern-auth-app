@@ -12,6 +12,7 @@ import {
 } from "../redux/user/user.slice.js";
 import DeleteModal from "../modals/DeleteModal.jsx";
 import UpdateModal from "../modals/UpdateModal.jsx";
+import LogoutModal from "../modals/LogoutModal.jsx";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState(null);
   const [showUserUpdateModal, setShowUserUpdateModal] = useState(false);
   const [showUserDeleteModal, setShowUserDeleteModal] = useState(false);
+  const [showUserSignoutModal, setShowUserSignoutModal] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -181,10 +183,16 @@ const Dashboard = () => {
             <button
               type="button"
               className="mx-auto bg-sky-700 text-white text-xl px-4 py-1 rounded-lg hover:opacity-85"
-              onClick={handleSignout}
+              onClick={() => setShowUserSignoutModal(true)}
             >
               Sign out
             </button>
+            {showUserSignoutModal && (
+              <LogoutModal
+                onClose={() => setShowUserSignoutModal(false)}
+                onSignoutUser={handleSignout}
+              />
+            )}
           </div>
         </div>
       </div>
