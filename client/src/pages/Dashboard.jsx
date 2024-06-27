@@ -8,6 +8,7 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signoutUserSuccess,
 } from "../redux/user/user.slice.js";
 
 const Dashboard = () => {
@@ -65,6 +66,22 @@ const Dashboard = () => {
       }
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutUserSuccess(data));
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -138,7 +155,11 @@ const Dashboard = () => {
             >
               <p>Delete Account?</p>
             </Link>
-            <Link to="#" className="cursor-pointer hover:underline">
+            <Link
+              to="#"
+              className="cursor-pointer hover:underline"
+              onClick={handleSignout}
+            >
               <p>Sign out</p>
             </Link>
           </div>
