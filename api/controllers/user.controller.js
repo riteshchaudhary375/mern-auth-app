@@ -7,17 +7,6 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
-  const { username, email, password } = req.body;
-  if (
-    !username ||
-    !email ||
-    !password ||
-    username === "" ||
-    email === "" ||
-    password === ""
-  ) {
-    return next(errorHandler(400, "Input fields are required"));
-  }
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this user"));
   }
@@ -30,7 +19,7 @@ export const updateUser = async (req, res, next) => {
   if (req.body.username) {
     if (req.body.username.length < 7 || req.body.username.length > 20) {
       return next(
-        errorHandler(400, "Username must be between 7 and 20 characters")
+        errorHandler(400, "Username must be between 7 to 20 characters")
       );
     }
 

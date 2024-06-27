@@ -23,7 +23,7 @@ const Dashboard = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     setUpdateUserErrorMessage(null);
     setUpdateUserSuccessMessage(null);
@@ -102,7 +102,7 @@ const Dashboard = () => {
           <h1 className="font-semibold text-3xl text-slate-700 underline mb-4">
             Profile
           </h1>
-          <form className="w-full" onSubmit={handleSubmit}>
+          <form className="w-full" onSubmit={handleUpdateSubmit}>
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="username" className="text-slate-500 w-1/4">
                 Username:{" "}
@@ -138,30 +138,33 @@ const Dashboard = () => {
                 id="password"
                 name="password"
                 className="text-slate-700 border border-slate-300 outline-slate-300 p-1 rounded-md  w-3/4"
-                placeholder="*******"
+                placeholder="password"
+                defaultValue="*******"
                 onChange={handleChange}
               />
             </div>
-            <button className=" w-1/2 mx-auto justify-center flex items-center font-semibold text-xl bg-sky-700 text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85">
-              Update Profile
-            </button>
+            <div className="flex items-center justify-between">
+              <button className="border-2 border-green-700 hover:bg-green-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85">
+                Update Profile
+              </button>
+              <button
+                type="button"
+                className="border-2 border-red-700 hover:bg-red-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85"
+                onClick={handleDeleteUser}
+              >
+                Delete Account
+              </button>
+            </div>
           </form>
           <hr className="w-full my-4" />
           <div className="w-full flex flex-row items-center justify-between">
-            <Link
-              to="/sign-in"
-              className="cursor-pointer hover:underline"
-              onClick={handleDeleteUser}
-            >
-              <p>Delete Account?</p>
-            </Link>
-            <Link
-              to="#"
-              className="cursor-pointer hover:underline"
+            <button
+              type="button"
+              className="mx-auto bg-sky-700 text-white text-xl px-4 py-1 rounded-lg hover:opacity-85"
               onClick={handleSignout}
             >
-              <p>Sign out</p>
-            </Link>
+              Sign out
+            </button>
           </div>
         </div>
       </div>
