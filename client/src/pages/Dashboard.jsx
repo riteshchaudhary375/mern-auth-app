@@ -11,6 +11,7 @@ import {
   signoutUserSuccess,
 } from "../redux/user/user.slice.js";
 import DeleteModal from "../modals/DeleteModal.jsx";
+import UpdateModal from "../modals/UpdateModal.jsx";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [updateUserSuccessMessage, setUpdateUserSuccessMessage] =
     useState(null);
   const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState(null);
+  const [showUserUpdateModal, setShowUserUpdateModal] = useState(false);
   const [showUserDeleteModal, setShowUserDeleteModal] = useState(false);
 
   const handleChange = (e) => {
@@ -104,7 +106,7 @@ const Dashboard = () => {
           <h1 className="font-semibold text-3xl text-slate-700 underline mb-4">
             Profile
           </h1>
-          <form className="w-full" onSubmit={handleUpdateSubmit}>
+          <form className="w-full">
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="username" className="text-slate-500 w-1/4">
                 Username:{" "}
@@ -146,9 +148,19 @@ const Dashboard = () => {
               />
             </div>
             <div className="flex items-center justify-between">
-              <button className="border-2 border-green-700 hover:bg-green-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85">
+              <button
+                type="button"
+                className="border-2 border-green-700 hover:bg-green-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85"
+                onClick={() => setShowUserUpdateModal(true)}
+              >
                 Update Profile
               </button>
+              {showUserUpdateModal && (
+                <UpdateModal
+                  onClose={() => setShowUserUpdateModal(false)}
+                  onUpdateUser={handleUpdateSubmit}
+                />
+              )}
               <button
                 type="button"
                 className="border-2 border-red-700 hover:bg-red-700 hover:text-white px-4 py-1 rounded-lg mt-3 hover:opacity-85"
