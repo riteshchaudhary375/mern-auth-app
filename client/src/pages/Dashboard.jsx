@@ -5,6 +5,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/user.slice.js";
 
 const Dashboard = () => {
@@ -45,6 +48,23 @@ const Dashboard = () => {
     } catch (error) {
       dispatch(updateUserFailure(error));
       setUpdateUserErrorMessage(error.message);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -111,7 +131,11 @@ const Dashboard = () => {
           </form>
           <hr className="w-full my-4" />
           <div className="w-full flex flex-row items-center justify-between">
-            <Link to="#" className="cursor-pointer hover:underline">
+            <Link
+              to="/sign-in"
+              className="cursor-pointer hover:underline"
+              onClick={handleDeleteUser}
+            >
               <p>Delete Account?</p>
             </Link>
             <Link to="#" className="cursor-pointer hover:underline">
