@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import PrivateRouter from "./components/PrivateRouter";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         </Route>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   );

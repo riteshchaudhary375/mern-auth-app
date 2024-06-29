@@ -7,10 +7,8 @@ import {
   signInFailure,
 } from "../redux/user/user.slice.js";
 import OAuth from "../components/OAuth.jsx";
-import ForgotPassword from "../modals/ForgotPassword.jsx";
 
 const SignIn = () => {
-  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [formData, setFormData] = useState({});
   /* const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false); */
@@ -105,19 +103,10 @@ const SignIn = () => {
               <span className="text-sky-600 hover:underline">Sign up</span>
             </Link>
           </div>
-          <Link to="#">
-            <span
-              className="hover:underline"
-              onClick={() => setShowForgotPasswordModal(true)}
-            >
-              Forgot Password?
-            </span>
+          <Link to="/forgot-password">
+            <span className="hover:underline">Forgot Password?</span>
           </Link>
-          {showForgotPasswordModal && (
-            <ForgotPassword onClose={() => setShowForgotPasswordModal(false)} />
-          )}
         </div>
-
         <p className="text-red-500 mt-5">{errorMessage && errorMessage}</p>
       </div>
     </div>
