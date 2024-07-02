@@ -103,7 +103,7 @@ const SignIn = () => {
               <span className="text-sky-600 hover:underline">Sign up</span>
             </Link>
           </div>
-          <Link to="/forgot-password">
+          <Link to="/forgot/password">
             <span className="hover:underline">Forgot Password?</span>
           </Link>
         </div>

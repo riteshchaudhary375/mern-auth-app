@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user/user.slice.js";
+import forgotPasswordReducer from "./user/forgotPassword.slice.js";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -9,7 +10,10 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({ user: userReducer });
+const rootReducer = combineReducers({
+  user: userReducer,
+  forgotPassword: forgotPasswordReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
