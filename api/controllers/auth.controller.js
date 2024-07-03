@@ -176,12 +176,12 @@ export const forgotPassword = async (req, res, next) => {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log("Got Error", error);
+          // console.log("Got Error", error);
           return res
             .status(401)
             .json({ success: false, message: "Email not send" });
         } else {
-          console.log("Email sent: " + info.response);
+          // console.log("Email sent: " + info.response);
           res
             .status(200)
             .json({ success: true, message: "Email sent successfully" });
