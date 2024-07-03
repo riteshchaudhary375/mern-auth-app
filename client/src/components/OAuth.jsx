@@ -37,7 +37,6 @@ const OAuth = () => {
       }
     } catch (error) {
       console.log("Could not login with google!", error);
-      dis;
     }
   };
 
