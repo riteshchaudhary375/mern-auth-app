@@ -9,12 +9,19 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password) {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      formData.username === "" ||
+      formData.email === "" ||
+      formData.password === ""
+    ) {
       return setErrorMessage("All fields are required");
     }
 
@@ -28,10 +35,13 @@ const SignUp = () => {
       });
       const data = await res.json();
       // console.log(data);
+
       if (data.success === false) {
-        setErrorMessage(data.message);
+        return setErrorMessage(data.message);
       }
+
       setLoading(false);
+
       if (res.ok) {
         navigate("/sign-in");
       }
@@ -45,7 +55,9 @@ const SignUp = () => {
   return (
     <div className="p-3 max-w-lg mx-auto">
       <div className="bg-[#ffffff] border rounded-2xl shadow-2xl p-6 mt-9">
-        <h1 className="text-3xl font-semibold text-center mb-2">Create a new account</h1>
+        <h1 className="text-3xl font-semibold text-center mb-2">
+          Create a new account
+        </h1>
         <p className="text-slate-600 text-center mb-5">It's quick and easy</p>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
@@ -83,10 +95,7 @@ const SignUp = () => {
             <span className="text-blue-500 hover:underline">Sign in</span>
           </Link>
         </div>
-        <p className="text-red-500 mt-5">
-          {/* {errorMessage && "Something went wrong"} */}
-          {errorMessage && errorMessage}
-        </p>
+        {errorMessage && <p className="text-red-500 mt-5">{errorMessage}</p>}
       </div>
     </div>
   );

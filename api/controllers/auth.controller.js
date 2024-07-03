@@ -24,14 +24,27 @@ export const signup = async (req, res, next) => {
     return next(errorHandler(400, "All fields are required"));
   }
 
-  const hashedPassword = bcryptjs.hashSync(password, 10);
-
-  const newUser = new User({
-    username,
-    email,
-    password: hashedPassword,
-  });
   try {
+    const preUsername = await User.findOne({ username });
+    if (preUsername) {
+      return res
+        .status(422)
+        .json({ success: false, message: "Username already exists" });
+    }
+
+    const preEmail = await User.findOne({ email });
+    if (preEmail) {
+      return res
+        .status(422)
+        .json({ success: false, message: "Email already exists" });
+    }
+
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
     await newUser.save();
     res.status(200).json({ success: true, message: "Signup successful" });
   } catch (error) {
