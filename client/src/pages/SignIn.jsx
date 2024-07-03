@@ -10,15 +10,12 @@ import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  /* const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false); */
-
   const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
@@ -30,13 +27,11 @@ const SignIn = () => {
       formData.email === "" ||
       formData.password === ""
     ) {
-      // return setErrorMessage("All fields are required");
+      // console.log("All fields are required");
       return dispatch(signInFailure("All fields are required"));
     }
 
     try {
-      /* setErrorMessage(false);
-      setLoading(true); */
       dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
@@ -45,20 +40,17 @@ const SignIn = () => {
       });
       const data = await res.json();
       // console.log(data);
+
       if (data.success === false) {
-        // setErrorMessage(data.message);
         dispatch(signInFailure(data.message));
-        return;
       }
-      // setLoading(false);
+
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
-      /* setErrorMessage(error.message);
-      setLoading(false); */
-      dispatch(signInFailure(error));
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -71,14 +63,14 @@ const SignIn = () => {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter email address"
             id="email"
             className="border-2 p-3 rounded-lg outline-sky-500"
             onChange={handleChange}
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter password"
             id="password"
             className="border-2 p-3 rounded-lg outline-sky-500"
             onChange={handleChange}
@@ -107,7 +99,9 @@ const SignIn = () => {
             <span className="hover:underline">Forgot Password?</span>
           </Link>
         </div>
-        <p className="text-red-500 mt-5">{errorMessage && errorMessage}</p>
+        {/* {error && <p className="text-red-500 mt-5">{error || error.message}</p>} */}
+        {/* {error && <p className="text-red-500 mt-5">{error}</p>} */}
+        {errorMessage && <p className="text-red-500 mt-5">{errorMessage}</p>}
       </div>
     </div>
   );

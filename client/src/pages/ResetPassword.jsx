@@ -59,7 +59,7 @@ const ResetPassword = () => {
         navigate("/success");
       } else {
         console.log("Token expired! Generate new link");
-        setErrorMessage("Token expired! Generate new link");
+        setErrorMessage("Token expired! Please generate new link");
         setLoading(false);
       }
     } catch (error) {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -185,7 +184,7 @@ const Dashboard = () => {
               className="mx-auto bg-sky-700 text-white text-xl px-4 py-1 rounded-lg hover:opacity-85"
               onClick={() => setShowUserSignoutModal(true)}
             >
-              Sign out
+              Log out
             </button>
             {showUserSignoutModal && (
               <LogoutModal
