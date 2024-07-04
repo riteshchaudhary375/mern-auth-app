@@ -45,12 +45,13 @@ const Dashboard = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+
       if (!res.ok) {
         dispatch(updateUserFailure(data.message));
         setUpdateMessage(null);
       } else {
         dispatch(updateUserSuccess(data));
-        setUpdateMessage("User updated successfully");
+        setUpdateMessage("Profile updated successfully.");
       }
     } catch (error) {
       setUpdateMessage(null);
@@ -119,6 +120,7 @@ const Dashboard = () => {
               id="username"
               name="username"
               className="text-slate-700 border border-slate-300 outline-slate-300 p-1 rounded-md  w-3/4"
+              placeholder="Your name"
               defaultValue={currentUser.username}
               onChange={handleChange}
             />
@@ -132,6 +134,7 @@ const Dashboard = () => {
               id="email"
               name="email"
               className="text-slate-700 border border-slate-300 outline-slate-300 p-1 rounded-md  w-3/4"
+              placeholder="Your email"
               defaultValue={currentUser.email}
               onChange={handleChange}
             />
