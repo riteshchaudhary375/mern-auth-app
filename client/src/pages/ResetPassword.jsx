@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { BiHide } from "react-icons/bi";
+import { BiShow } from "react-icons/bi";
 
 const ResetPassword = () => {
   // verifying id and token
@@ -13,6 +15,7 @@ const ResetPassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const userValid = async () => {
     const res = await fetch(
@@ -54,11 +57,11 @@ const ResetPassword = () => {
       if (res.status === 201) {
         setPassword("");
         setUpdateMessage("Password updated successfully");
-        console.log("Password updated successfully");
+        // console.log("Password updated successfully");
         setLoading(false);
         navigate("/success");
       } else {
-        console.log("Token expired! Generate new link");
+        // console.log("Token expired! Generate new link");
         setErrorMessage("Token expired! Please generate new link");
         setLoading(false);
       }
@@ -83,7 +86,24 @@ const ResetPassword = () => {
           <label htmlFor="password" className="font-semibold text-lg">
             New Password:
           </label>
-          <input
+          <div className="border-2 rounded-lg flex justify-between items-center">
+            <input
+              className="w-full p-3 rounded-lg outline-green-500 z-10"
+              type={!showPassword ? "password" : "text"}
+              name="password"
+              id="password"
+              placeholder="Enter new password"
+              value={password}
+              onChange={handleChange}
+            />
+            <div
+              className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {!showPassword ? <BiShow /> : <BiHide />}
+            </div>
+          </div>
+          {/* <input
             className="border-2 p-2 rounded-lg mt-1 outline-green-500"
             type="password"
             name="password"
@@ -91,7 +111,7 @@ const ResetPassword = () => {
             placeholder="Enter new password"
             value={password}
             onChange={handleChange}
-          />
+          /> */}
           <button
             disabled={loading}
             onClick={handleSubmit}

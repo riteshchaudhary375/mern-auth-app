@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { BiHide } from "react-icons/bi";
+import { BiShow } from "react-icons/bi";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -74,13 +77,22 @@ const SignUp = () => {
             className="border-2 p-3 rounded-lg outline-sky-500"
             onChange={handleChange}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            id="password"
-            className="border-2 p-3 rounded-lg outline-sky-500"
-            onChange={handleChange}
-          />
+          <div className="border-2 rounded-lg flex justify-between items-center">
+            <input
+              type={!showPassword ? "password" : "text"}
+              placeholder="Password"
+              id="password"
+              className="w-full p-3 rounded-lg outline-sky-500 z-10"
+              onChange={handleChange}
+            />
+            {/* <hr className="h-9 w-0.5 rounded-lg bg-slate-200" /> */}
+            <div
+              className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {!showPassword ? (<BiShow />) : (<BiHide />)}
+            </div>
+          </div>
           <button
             disabled={loading}
             className="bg-sky-600 text-white p-3 rounded-lg hover:opacity-90  disabled:opacity-80"
@@ -98,7 +110,7 @@ const SignUp = () => {
         {errorMessage && <p className="text-red-500 mt-5">{errorMessage}</p>}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default SignUp;

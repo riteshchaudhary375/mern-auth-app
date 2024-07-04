@@ -7,10 +7,13 @@ import {
   signInFailure,
 } from "../redux/user/user.slice.js";
 import OAuth from "../components/OAuth.jsx";
+import { BiHide } from "react-icons/bi";
+import { BiShow } from "react-icons/bi";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -68,13 +71,29 @@ const SignIn = () => {
             className="border-2 p-3 rounded-lg outline-sky-500"
             onChange={handleChange}
           />
-          <input
+          {/* <input
             type="password"
             placeholder="Enter password"
             id="password"
             className="border-2 p-3 rounded-lg outline-sky-500"
             onChange={handleChange}
-          />
+          /> */}
+          <div className="border-2 rounded-lg flex justify-between items-center">
+            <input
+              type={!showPassword ? "password" : "text"}
+              placeholder="Password"
+              id="password"
+              className="w-full p-3 rounded-lg outline-sky-500 z-10"
+              onChange={handleChange}
+            />
+            {/* <hr className="h-9 w-0.5 rounded-lg bg-slate-200" /> */}
+            <div
+              className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {!showPassword ? <BiShow /> : <BiHide />}
+            </div>
+          </div>
           <button
             disabled={loading}
             className="bg-sky-600 text-white p-3 rounded-lg hover:opacity-85  disabled:opacity-80"

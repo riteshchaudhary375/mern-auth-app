@@ -12,6 +12,8 @@ import {
 import DeleteModal from "../modals/DeleteModal.jsx";
 import UpdateModal from "../modals/UpdateModal.jsx";
 import LogoutModal from "../modals/LogoutModal.jsx";
+import { BiHide } from "react-icons/bi";
+import { BiShow } from "react-icons/bi";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const Dashboard = () => {
     (state) => state.user
   );
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [updateMessage, setUpdateMessage] = useState(null);
   const [showUserUpdateModal, setShowUserUpdateModal] = useState(false);
   const [showUserDeleteModal, setShowUserDeleteModal] = useState(false);
@@ -133,7 +136,7 @@ const Dashboard = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex items-center justify-between mb-2">
+          {/* <div className="flex items-center justify-between mb-2">
             <label htmlFor="password" className="text-slate-500 w-1/4">
               Password:{" "}
             </label>
@@ -146,6 +149,27 @@ const Dashboard = () => {
               defaultValue="*******"
               onChange={handleChange}
             />
+          </div> */}
+          <div className="flex items-center justify-between mb-2">
+            <label htmlFor="password" className="text-slate-500 w-1/4">
+              Password:{" "}
+            </label>
+            <div className="w-3/4 border border-slate-300 rounded-md flex justify-between items-center">
+              <input
+                type={!showPassword ? "password" : "text"}
+                placeholder="Password is private"
+                id="password"
+                name="password"
+                className="w-full text-slate-700 rounded-md outline-slate-300 p-1"
+                onChange={handleChange}
+              />
+              <div
+                className="p-2 flex items-center cursor-pointer bg-slate-200"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {!showPassword ? <BiShow /> : <BiHide />}
+              </div>
+            </div>
           </div>
           <div className="flex items-center justify-between">
             <button
