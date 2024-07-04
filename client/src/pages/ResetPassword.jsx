@@ -10,12 +10,15 @@ const ResetPassword = () => {
   console.log(params); */
 
   const { id, token } = useParams();
-  const [password, setPassword] = useState("");
-  const [updateMessage, setUpdateMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({ password: "", cPassword: "" });
+  /* const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState(""); */
+  const [updateMessage, setUpdateMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
 
   const userValid = async () => {
     const res = await fetch(
@@ -39,36 +42,62 @@ const ResetPassword = () => {
   };
 
   const handleChange = (e) => {
-    setPassword(e.target.value);
+    // ------------wrong---------------
+    /* setPassword(e.target.value);
+    setCPassword(e.target.value); */
+
+    // ----------------for whole form at a time------------------
+
+    // setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+
+    // --------------- one by one------------------------
+
+    const { name, value } = e.target;
+
+    setFormData(() => {
+      return {
+        ...formData,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/auth/${id}/${token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      const data = await res.json();
-      console.log(data);
 
-      if (res.status === 201) {
-        setPassword("");
-        setUpdateMessage("Password updated successfully");
-        // console.log("Password updated successfully");
-        setLoading(false);
-        navigate("/success");
-      } else {
-        // console.log("Token expired! Generate new link");
-        setErrorMessage("Token expired! Please generate new link");
+    const { password, cPassword } = formData;
+
+    if (password === "") {
+      return setErrorMessage("Password is required");
+    } else if (cPassword === "") {
+      return setErrorMessage("Confirm password is required");
+    } else if (password !== cPassword) {
+      return setErrorMessage("Password and Confirm password not matched");
+    } else {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/auth/${id}/${token}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password }),
+        });
+        const data = await res.json();
+        // console.log(data);
+        setFormData({ ...formData, password: "", cPassword: "" });
+
+        if (res.status === 201) {
+          setUpdateMessage("Password updated successfully");
+          setLoading(false);
+          navigate("/success");
+        } else {
+          setLoading(false);
+          setErrorMessage("Token expired! Please generate new link");
+          return;
+        }
+      } catch (error) {
+        setErrorMessage(error.message);
         setLoading(false);
       }
-    } catch (error) {
-      // console.log(error);
-      setErrorMessage(error);
-      setLoading(false);
     }
   };
 
@@ -83,39 +112,55 @@ const ResetPassword = () => {
           Reset Password
         </h1>
         <form className="flex flex-col">
-          <label htmlFor="password" className="font-semibold text-lg">
-            New Password:
-          </label>
-          <div className="border-2 rounded-lg flex justify-between items-center">
-            <input
-              className="w-full p-3 rounded-lg outline-green-500 z-10"
-              type={!showPassword ? "password" : "text"}
-              name="password"
-              id="password"
-              placeholder="Enter new password"
-              value={password}
-              onChange={handleChange}
-            />
-            <div
-              className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {!showPassword ? <BiShow /> : <BiHide />}
+          <div className="mb-3">
+            <label htmlFor="password" className="font-semibold text-lg">
+              New Password:
+            </label>
+            <div className="border-2 rounded-lg flex justify-between items-center">
+              <input
+                className="w-full p-3 rounded-lg outline-green-500 z-10"
+                type={!showPassword ? "password" : "text"}
+                name="password"
+                id="password"
+                placeholder="Enter new password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <div
+                className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {!showPassword ? <BiShow /> : <BiHide />}
+              </div>
             </div>
           </div>
-          {/* <input
-            className="border-2 p-2 rounded-lg mt-1 outline-green-500"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter new password"
-            value={password}
-            onChange={handleChange}
-          /> */}
+
+          <div>
+            <label htmlFor="password" className="font-semibold text-lg">
+              Confirm Password:
+            </label>
+            <div className="border-2 rounded-lg flex justify-between items-center">
+              <input
+                className="w-full p-3 rounded-lg outline-green-500 z-10"
+                type={!showCPassword ? "password" : "text"}
+                name="cPassword"
+                id="cPassword"
+                placeholder="Enter confirm password"
+                value={formData.cPassword}
+                onChange={handleChange}
+              />
+              <div
+                className=" h-12 py-3 px-4 flex items-center cursor-pointer bg-slate-200"
+                onClick={() => setShowCPassword(!showCPassword)}
+              >
+                {!showCPassword ? <BiShow /> : <BiHide />}
+              </div>
+            </div>
+          </div>
           <button
             disabled={loading}
             onClick={handleSubmit}
-            className="bg-green-700 text-white w-full rounded-md p-2 hover:opacity-85 mt-6 mb-2"
+            className="bg-green-700 text-white w-full rounded-md p-2 hover:opacity-85 mt-7 mb-2"
           >
             {loading ? "Submitting..." : "Submit"}
           </button>
