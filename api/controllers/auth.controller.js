@@ -7,7 +7,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // HASHING ROUNDS
-const salt = process.env.SALT_ROUNDS;
+const salt = parseInt(process.env.SALT_ROUNDS);
+// const salt = 10;
 
 // SECRET KEY
 const keySecret = process.env.JWT_SECRET;
@@ -174,7 +175,149 @@ export const forgotPassword = async (req, res, next) => {
         from: process.env.EMAIL,
         to: email,
         subject: "MERN Auth Password Reset",
-        text: `This link valid for 3 minutes http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}`,
+        // text: `This link valid for 3 minutes http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}`,
+        html: `<!DOCTYPE html>
+                <html lang="en">
+                  <head>
+                    <meta charset="UTF-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <title>Email Template</title>
+                  </head>
+                  <body
+                    style="background-color: grey; font-family: 'Poppins', Arial, sans-serif"
+                  >
+                    <table
+                      align="center"
+                      border="0"
+                      cellpadding="0"
+                      cellspacing="0"
+                      width="550"
+                      bgcolor="white"
+                      style="border: 2px solid black"
+                    >
+                      <tbody>
+                        <!-- HEADER -->
+                        <tr>
+                          <td
+                            align="center"
+                            style="
+                              background-color: #4cb96b;
+                              color: #ffffff;
+                              height: 50px;
+                              line-height: 25px;
+                              letter-spacing: 0.7px;
+                            "
+                          >
+                            <p style="margin-bottom: 0px">
+                              <a
+                                href="#"
+                                target="_blank"
+                                style="
+                                  font-size: 23px;
+                                  font-weight: bold;
+                                  color: #ffffff;
+                                  text-decoration: none;
+                                "
+                                >MERN Auth</a
+                              >
+                            </p>
+                            <p style="font-size: 14px; font-weight: semibold; margin-top: 0px">
+                              Reset password
+                            </p>
+                          </td>
+                        </tr>
+
+                        <!-- BODY -->
+                        <tr>
+                          <td>
+                            <table style="padding: 25px 20px; font-size: 15px">
+                              <tr>
+                                <td>
+                                  <tr>
+                                    <td style="line-height: 25px; letter-spacing: 0.7px">
+                                      <p>
+                                        Hi
+                                        <span style="font-weight: bold; font-size: 18px"
+                                          >${validUser.username}</span
+                                        >,
+                                      </p>
+                                      <p>Forgot your password?</p>
+                                      <p>
+                                        You recently requested to reset your password for your
+                                        account. Use the button below to reset it.
+                                        <strong
+                                          >This password reset is only valid for 3
+                                          minutes.</strong
+                                        >
+                                      </p>
+                                      <a
+                                        href="http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}"
+                                        target="_blank"
+                                        style="
+                                          font-weight: bold;
+                                          text-decoration: none;
+                                          padding: 7px 15px;
+                                          border-radius: 7px;
+                                          background-color: #4cb96b;
+                                          color: #ffffff;
+                                        "
+                                        >Reset password</a
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p style="margin-bottom: 0px; margin-top: 25px; color: black">
+                                        Or copy and paste the URL into your browser:
+                                      </p>
+                                      <p
+                                        style="
+                                          margin-top: 5px;
+                                          background-color: rgba(0, 0, 0, 0.07);
+                                          padding: 5px 0px 5px 9px;
+                                          border-radius: 7px;
+                                        "
+                                      >
+                                        <a
+                                          href="#"
+                                          target="_blank"
+                                          style="color: #0400ed; font-size: 12px"
+                                          >
+                                            http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}
+                                          </a
+                                        >
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <!-- FOOTER -->
+                        <tr>
+                          <td
+                            align="center"
+                            style="
+                              background-color: #333333;
+                              color: #ffffff;
+                              font-size: 13px;
+                              height: 95px;
+                              line-height: 25px;
+                              letter-spacing: 0.7px;
+                            "
+                          >
+                            <p style="margin-bottom: 0px">
+                              Copyright © 2024 | MERN Auth | All Rights Reserved.
+                            </p>
+                            <p style="margin-top: 0px">Mahrajgunj, Kathmandu, Nepal</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </body>
+                </html>
+              `,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
