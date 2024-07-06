@@ -6,6 +6,12 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
 
+// HASHING ROUNDS
+const salt = process.env.SALT_ROUNDS;
+
+// SECRET KEY
+const keySecret = process.env.JWT_SECRET;
+
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
@@ -39,7 +45,7 @@ export const signup = async (req, res, next) => {
         .json({ success: false, message: "Email already exists" });
     }
 
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const hashedPassword = bcryptjs.hashSync(password, salt);
     const newUser = new User({
       username,
       email,
@@ -74,7 +80,7 @@ export const signin = async (req, res, next) => {
       return next(errorHandler(400, "Invalid credentials"));
     }
 
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: validUser._id }, keySecret);
     const { password: hashedPassword, ...rest } = validUser._doc;
     // const expiryDate = new Date(Date.now() + 3600000); // 1 hour
     res
@@ -92,7 +98,7 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id }, keySecret);
       const { password, ...rest } = user._doc;
       // const expiryDate = new Date(Date.now() + 3600000); // 1 hour
       res
@@ -103,7 +109,7 @@ export const google = async (req, res, next) => {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
-      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, salt);
       const newUser = new User({
         username:
           name.toLowerCase().split(" ").join("") +
@@ -113,7 +119,7 @@ export const google = async (req, res, next) => {
         profilePicture: googlePhotoUrl,
       });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: newUser._id }, keySecret);
       const { password, ...rest } = newUser._doc;
       // const expiryDate = new Date(Date.now() + 3600000);
       res
@@ -134,9 +140,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.PASSWORD,
   },
 });
-
-// SECRET KEY
-const keySecret = process.env.JWT_SECRET;
 
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
@@ -168,9 +171,9 @@ export const forgotPassword = async (req, res, next) => {
     // console.log("setUserToken", setUserToken);
     if (setUserToken) {
       const mailOptions = {
-        from: "riteshkd997@gmail.com",
+        from: process.env.EMAIL,
         to: email,
-        subject: "Sending Email for Password Reset",
+        subject: "MERN Auth Password Reset",
         text: `This link valid for 3 minutes http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}`,
       };
 
@@ -230,7 +233,7 @@ export const newPassword = async (req, res, next) => {
     const verifyToken = jwt.verify(token, keySecret);
 
     if (validUser && verifyToken.id) {
-      const newPassword = bcryptjs.hashSync(password, 10);
+      const newPassword = bcryptjs.hashSync(password, salt);
 
       const setUserNewPassword = await User.findByIdAndUpdate(
         { _id: id },

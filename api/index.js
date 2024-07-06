@@ -19,12 +19,14 @@ mongoose
 
 const app = express();
 
+const port = process.env.API_PORT;
+
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors());
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 app.use("/api/auth", authRoutes);
