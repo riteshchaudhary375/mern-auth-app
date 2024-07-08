@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 // import cors from "cors";
 
 dotenv.config();
@@ -17,7 +18,19 @@ mongoose
     console.log(error);
   });
 
+// for finding path dynamically
+const __dirname = path.resolve();
+
+// express app
 const app = express();
+
+// defining directory of folder client statically
+app.use(express.static(path.join(__dirname, "/client/dist")));
+
+// from that static folder path, finding 'index.html' file and sending to client to render first
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 const port = process.env.API_PORT;
 
