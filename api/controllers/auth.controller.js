@@ -251,7 +251,7 @@ export const forgotPassword = async (req, res, next) => {
                                         >
                                       </p>
                                       <a
-                                        href="http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}"
+                                        href="${process.env.FRONTEND_URL}/reset/password/${validUser.id}/${setUserToken.verifyToken}"
                                         target="_blank"
                                         style="
                                           font-weight: bold;
@@ -283,7 +283,7 @@ export const forgotPassword = async (req, res, next) => {
                                           target="_blank"
                                           style="color: #0400ed; font-size: 12px"
                                           >
-                                            http://localhost:5173/reset/password/${validUser.id}/${setUserToken.verifyToken}
+                                            ${process.env.FRONTEND_URL}/reset/password/${validUser.id}/${setUserToken.verifyToken}
                                           </a
                                         >
                                       </p>
