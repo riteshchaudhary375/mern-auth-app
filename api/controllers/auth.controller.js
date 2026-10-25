@@ -308,7 +308,7 @@ export const forgotPassword = async (req, res, next) => {
                             "
                           >
                             <p style="margin-bottom: 0px">
-                              Copyright © 2024 | MERN Auth | All Rights Reserved.
+                              Copyright © 2026 | MERN Application | All Rights Reserved.
                             </p>
                             <p style="margin-top: 0px">Mahrajgunj, Kathmandu, Nepal</p>
                           </td>
@@ -322,12 +322,13 @@ export const forgotPassword = async (req, res, next) => {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          // console.log("Got Error", error);
+          console.log("Email Error", error);
           return res
-            .status(401)
-            .json({ success: false, message: "Email not send" });
+            .status(500)
+            .json({ success: false, message: error.message });
+            // .json({ success: false, message: "Email not send" });
         } else {
-          // console.log("Email sent: " + info.response);
+          console.log("Email SENT: " + info.response);
           res
             .status(200)
             .json({ success: true, message: "Email sent successfully" });
@@ -338,6 +339,11 @@ export const forgotPassword = async (req, res, next) => {
     next(error);
   }
 };
+
+// temporarily test:
+// console.log("EMAIL:", process.env.EMAIL);
+// console.log("PASSWORD exists:", !!process.env.PASSWORD);
+// console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 
 export const resetPassword = async (req, res, next) => {
   const { id, token } = req.params;
