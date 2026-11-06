@@ -4,7 +4,7 @@ A full-stack authentication application built with the **MERN Stack**. The proje
 
 ### NOTE:
 
-- Full documentation of this application is in folder "document".
+- document of this project is in document folder.
 
 ## Live Demo
 
