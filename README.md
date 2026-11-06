@@ -2,9 +2,13 @@
 
 A full-stack authentication application built with the **MERN Stack**. The project provides user registration, login, Google authentication, password reset through email, protected routes, and user profile management.
 
+### NOTE:
+
+- Full documentation of this application is in folder "document".
+
 ## Live Demo
 
-**Live Application:** Add your Render deployment URL here
+**Live Application:** https://mern-auth-app-rm8f.onrender.com/
 
 ## Features
 
